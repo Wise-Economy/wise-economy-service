@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <encoder>
+            <pattern>%highlight(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %cyan(%logger{36}.%M) - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="FILE">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeCallerData>true</includeCallerData>
+        </encoder>
+        <file>${LOG_PATH}/account-aggregator.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <immediateFlush>true</immediateFlush>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/account-aggregator.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender class="ch.qos.logback.classic.AsyncAppender"
+              name="ASYNC-LOGSTASH">
+        <appender-ref ref="FILE"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+    </appender>
+
+    <logger level="${APP_LOG_LEVEL}" name="org.wise_economy.account_aggregrator"/>
+
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
+        <level value="${APP_LOG_LEVEL}"/>
+    </logger>
+
+    <springProfile name="default,dev,local">
+        <root level="info">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="stage">
+        <root level="info">
+            <appender-ref ref="ASYNC-LOGSTASH"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="info">
+            <appender-ref ref="ASYNC-LOGSTASH"/>
+        </root>
+    </springProfile>
+
+    <springProperty name="LOG_PATH" source="logging.file.path"/>
+    <springProperty name="APP_NAME" source="spring.application.name"/>
+    <springProperty name="APP_LOG_LEVEL" source="logging.level.org.wise_economy.account_aggregrator"/>
+
+</configuration>
