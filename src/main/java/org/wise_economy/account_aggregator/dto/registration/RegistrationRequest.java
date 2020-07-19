@@ -1,5 +1,6 @@
 package org.wise_economy.account_aggregator.dto.registration;
 
+import java.util.Date;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class RegistrationRequest {
     private String firstName;
     private String lastName;
     @NotNull
-    private String dob;
+    private Date dob;
     @NotNull
     private String gender;
 }

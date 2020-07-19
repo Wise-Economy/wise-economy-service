@@ -2,6 +2,8 @@ package org.wise_economy.account_aggregator.domain;
 
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -19,5 +21,9 @@ public class UserToPerfiosTxnMapping extends BaseModel {
 
     @NotNull
     private String txnId;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
 }

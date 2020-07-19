@@ -18,7 +18,7 @@ public class User extends BaseModel {
     private String name;
 
     @NotNull
-    private Gender gender;
+    private String gender;
 
     @NotNull
     private String mobileNumber;
@@ -26,7 +26,10 @@ public class User extends BaseModel {
     @NotNull
     private Date dob;
 
-    @NotNull
     private String perfiosUserHandle;
+    
+    private String perfiosConsentHandle;
+
+    private String perfiosUserId;
 
 }

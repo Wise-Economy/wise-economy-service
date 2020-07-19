@@ -13,4 +13,5 @@ public class RegistrationResponse {
 
     private boolean success;
     private Long userId;
+    private String thirdPartyUrl;
 }
