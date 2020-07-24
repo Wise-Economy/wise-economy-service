@@ -1,6 +1,10 @@
 package org.wise_economy.account_aggregator.client.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.wise_economy.account_aggregator.dto.perfios.datafetch.FetchTransactionsPayload;
 import org.wise_economy.account_aggregator.dto.perfios.datafetch.InitiateDataFetch;
 import org.wise_economy.account_aggregator.dto.perfios.registration.RegistrationPayload;
 import org.wise_economy.account_aggregator.dto.perfios.registration.RegistrationResponse;
@@ -34,8 +39,6 @@ public class PerfiosWebClient implements AccountAggregator {
     private String apiKey;
 
     private final RestTemplate restTemplate;
-
-    private final ObjectMapper objectMapper;
 
     @Override
     public RegistrationResponse initiateRegistrationAndConsent(
@@ -64,7 +67,8 @@ public class PerfiosWebClient implements AccountAggregator {
                 "Perfios Registration Service",
                 "4xx");
         } catch (Exception e) {
-            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR, "Swasth EUA Service",
+            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR,
+                "Perfios Registration Service",
                 "5xx");
         }
     }
@@ -83,7 +87,7 @@ public class PerfiosWebClient implements AccountAggregator {
                 headers);
             ResponseEntity<Boolean> response = restTemplate
                 .exchange(url, HttpMethod.POST, requestEntity, Boolean.class);
-            if (!(response.getStatusCode().is2xxSuccessful()) ) {
+            if (!(response.getStatusCode().is2xxSuccessful())) {
                 throw new ExceptionHandler(ErrorHandler.INTERNAL_SERVER_ERROR,
                     "Perfios Registration Service",
                     "5xx");
@@ -94,8 +98,45 @@ public class PerfiosWebClient implements AccountAggregator {
                 "Perfios Registration Service",
                 "4xx");
         } catch (Exception e) {
-            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR, "Swasth EUA Service",
+            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR,
+                "Perfios Registration Servicee",
                 "5xx");
         }
+    }
+
+    @Override
+    public Boolean getTransactions(FetchTransactionsPayload txn) {
+        String getTranscationsList = "/process/rawReport";
+        try {
+            String url = perfiosBaseUri.concat(getTranscationsList);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("org_id", perfiosOrgId);
+            headers.add("api_key", apiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+
+            HttpEntity<FetchTransactionsPayload> requestEntity = new HttpEntity<>(txn,
+                headers);
+            ResponseEntity<byte[]> response = restTemplate
+                .exchange(url, HttpMethod.POST, requestEntity, byte[].class);
+            if (!(response.getStatusCode().is2xxSuccessful())) {
+                throw new ExceptionHandler(ErrorHandler.INTERNAL_SERVER_ERROR,
+                    "Perfios Registration Service",
+                    "5xx");
+            }
+            if (response.getStatusCode().is2xxSuccessful()) {
+                Files.write(Paths.get(txn.getTxnId() .concat(".zip")),
+                    Objects.requireNonNull(response.getBody()));
+            }
+        } catch (HttpClientErrorException hce) {
+            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR,
+                "Perfios Registration Service",
+                "4xx");
+        } catch (Exception e) {
+            throw new ExceptionHandler(ErrorHandler.RESOURCE_ACCESS_ERROR,
+                "Perfios Registration Service",
+                "5xx");
+        }
+        return true;
     }
 }

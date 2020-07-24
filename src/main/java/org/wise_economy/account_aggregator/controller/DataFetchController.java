@@ -25,4 +25,9 @@ public class DataFetchController {
     public ResponseEntity<Boolean> initiateDataFetch(@Valid @RequestBody DataFetchRequest dataFetchRequest) {
         return new ResponseEntity<>(getDataFromAA.getDataFromAA(dataFetchRequest), HttpStatus.OK);
     }
+
+    @PostMapping("/get-transactions")
+    public ResponseEntity<Boolean> getBankTransactions(@Valid @RequestBody Long userId) {
+        return new ResponseEntity<>(getDataFromAA.getTransactionsFromAA(userId),HttpStatus.OK);
+    }
 }
