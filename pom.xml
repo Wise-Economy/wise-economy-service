@@ -26,10 +26,6 @@
             <groupId>org.springframework.boot</groupId>
         </dependency>
         <dependency>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <groupId>org.springframework.boot</groupId>
-        </dependency>
-        <dependency>
             <artifactId>spring-cloud-starter-aws-messaging</artifactId>
             <groupId>org.springframework.cloud</groupId>
         </dependency>
@@ -61,19 +57,6 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <groupId>net.logstash.logback</groupId>
             <version>${logstash-encoder.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>shedlock-spring</artifactId>
-            <groupId>net.javacrumbs.shedlock</groupId>
-        </dependency>
-        <dependency>
-            <artifactId>shedlock-provider-redis-spring</artifactId>
-            <groupId>net.javacrumbs.shedlock</groupId>
-        </dependency>
-        <dependency>
-            <artifactId>rollbar-logback-spring-boot-starter</artifactId>
-            <groupId>ch.olmero</groupId>
-            <version>2.0.4.RELEASE</version>
         </dependency>
         <dependency>
             <artifactId>twilio</artifactId>
@@ -122,19 +105,14 @@
                 <version>${shedlock.version}</version>
             </dependency>
             <dependency>
-                <artifactId>shedlock-provider-redis-spring</artifactId>
-                <groupId>net.javacrumbs.shedlock</groupId>
-                <version>${shedlock.version}</version>
-            </dependency>
-            <dependency>
                 <artifactId>java-jwt</artifactId>
                 <groupId>com.auth0</groupId>
                 <version>3.10.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <description>Open EUA Service</description>
-    <groupId>org.bhs.openeua</groupId>
+    <description>Wise Economy Service</description>
+    <groupId>org.wise_economy.account_aggregator</groupId>
     <modelVersion>4.0.0</modelVersion>
 
     <name>account_aggregrator-service</name>

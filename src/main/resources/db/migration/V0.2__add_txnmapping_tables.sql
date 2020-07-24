@@ -1,7 +1,8 @@
 CREATE TABLE `user_to_perfios_txn_mapping` (
     `id` bigint(20)   NOT NULL AUTO_INCREMENT,
-    `user_id` bigint(20)   NOT NULL,
+    `user_user_id` bigint(20)   NOT NULL,
     `txn_id` varchar(255) DEFAULT NULL,
+    `type` varchar(255) DEFAULT NULL,
     `created_by`    varchar(255) DEFAULT NULL,
     `created_date`  datetime     DEFAULT NULL,
     `modified_by`   varchar(255) DEFAULT NULL,
@@ -15,4 +16,4 @@ CREATE TABLE `user_to_perfios_txn_mapping` (
  AUTO_INCREMENT = 1083
  DEFAULT CHARSET = utf8;
 
-ALTER TABLE `user_to_perfios_txn_mapping` ADD CONSTRAINT fk_perfios_txn_details FOREIGN KEY (user_id) REFERENCES user(user_id);
+ALTER TABLE `user_to_perfios_txn_mapping` ADD CONSTRAINT fk_perfios_txn_details FOREIGN KEY (user_user_id) REFERENCES user(user_id);

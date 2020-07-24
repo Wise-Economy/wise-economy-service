@@ -5,6 +5,8 @@ CREATE TABLE `user` (
  `mobile_number` varchar(255) NOT NULL,
  `name`    varchar(255) DEFAULT NULL,
  `perfios_user_handle` varchar(255) DEFAULT NULL,
+ `perfios_user_id` varchar(255) DEFAULT NULL,
+ `perfios_consent_handle` varchar(255) DEFAULT NULL,
  `created_by`    varchar(255) DEFAULT NULL,
  `created_date`  datetime     DEFAULT NULL,
  `modified_by`   varchar(255) DEFAULT NULL,
