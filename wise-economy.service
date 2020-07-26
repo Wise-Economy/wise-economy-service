@@ -1,0 +1,15 @@
+[Unit]
+Description=Wise Economy Service
+Requires=network.target
+After=network.target syslog.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+Type=simple
+WorkingDirectory=/home/ubuntu/wise_economy/service/wise-economy-service/latest
+ExecStart=/usr/bin/java -jar /home/ubuntu/wise_economy/service/wise-economy-service/latest/account_aggregator.jar --spring.profiles.active=$DEPLOYMENT_ENVIRONMENT
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
