@@ -7,8 +7,8 @@ After=network.target syslog.target
 User=ubuntu
 Group=ubuntu
 Type=simple
-WorkingDirectory=/home/ubuntu/wise_economy/service/wise-economy-service/latest
-ExecStart=/usr/bin/java -jar /home/ubuntu/wise_economy/service/wise-economy-service/latest/account_aggregator.jar --spring.profiles.active=$DEPLOYMENT_ENVIRONMENT
+WorkingDirectory=/home/ubuntu/wise_economy/service/wise-economy-service/target
+ExecStart=/usr/bin/java -jar /home/ubuntu/wise_economy/service/wise-economy-service/target/account_aggregator.jar --spring.profiles.active=$DEPLOYMENT_ENVIRONMENT
 Restart=no
 
 [Install]
