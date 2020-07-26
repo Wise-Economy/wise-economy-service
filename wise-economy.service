@@ -8,7 +8,7 @@ User=ubuntu
 Group=ubuntu
 Type=simple
 WorkingDirectory=/home/ubuntu/wise_economy/service/wise-economy-service/target
-ExecStart=/usr/bin/java -jar /home/ubuntu/wise_economy/service/wise-economy-service/target/account_aggregator.jar --spring.profiles.active=$DEPLOYMENT_ENVIRONMENT
+ExecStart=/usr/bin/java -jar /home/ubuntu/wise_economy/service/wise-economy-service/target/account_aggregator.jar --spring.profiles.active=stage
 Restart=no
 
 [Install]
