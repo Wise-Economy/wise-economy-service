@@ -2,9 +2,9 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <artifactId>account_aggregrator-service</artifactId>
+    <artifactId>account_aggregator-service</artifactId>
     <build>
-        <finalName>account_aggregrator</finalName>
+        <finalName>account_aggregator</finalName>
         <plugins>
             <plugin>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -115,7 +115,7 @@
     <groupId>org.wise_economy.account_aggregator</groupId>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>account_aggregrator-service</name>
+    <name>account_aggregator-service</name>
 
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
