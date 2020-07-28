@@ -83,28 +83,25 @@ public class PerfiosRegistrationServiceImpl implements RegistrationService {
 
     @Override
     public Boolean processConsentCallBackFromAA(ConsentCallbackResponse consentCallbackResponse) {
-        if (consentCallbackResponse.getConsentStatus().equals(ConsentStatus.READY)) {
-            UserToPerfiosTxnMapping txnMapping = userToPerfiosTxnIdMappingRepository
-                .findByTxnId(consentCallbackResponse.getTxnId()).orElse(null);
-            if (!ObjectUtils.isEmpty(txnMapping)) {
-                User userInContext = txnMapping.getUser();
-                userInContext.setPerfiosUserId(consentCallbackResponse.getUserId());
-                userRepository.save(userInContext);
-                consentCallbackResponse.getAccounts().forEach(account -> {
-                    Account account1 = new Account();
-                    account1.setFipId(account.getFipId());
-                    account1.setFiType(account.getFiType());
-                    account1.setAccountType(account.getAccType());
-                    account1.setLinkRefNumber(account.getLinkRefNumber());
-                    account1.setMaskedAccountNumber(account.getMaskedAccNumber());
-                    account1.setUser(userInContext);
-                    accountRepository.save(account1);
-                });
-                return true;
-            }else{
-                return false;
-            }
 
+        UserToPerfiosTxnMapping txnMapping = userToPerfiosTxnIdMappingRepository
+            .findByTxnId(consentCallbackResponse.getTxnId()).orElse(null);
+        if (!ObjectUtils.isEmpty(txnMapping)) {
+            User userInContext = txnMapping.getUser();
+            userInContext.setPerfiosUserId(consentCallbackResponse.getUserId());
+            userRepository.save(userInContext);
+            consentCallbackResponse.getAccounts().forEach(account -> {
+                Account account1 = new Account();
+                account1.setFipId(account.getFipId());
+                account1.setFiType(account.getFiType());
+                account1.setAccountType(account.getAccType());
+                account1.setLinkRefNumber(account.getLinkRefNumber());
+                account1.setMaskedAccountNumber(account.getMaskedAccNumber());
+                account1.setStatus(account.getStatus());
+                account1.setUser(userInContext);
+                accountRepository.save(account1);
+            });
+            return true;
         } else {
             return false;
         }

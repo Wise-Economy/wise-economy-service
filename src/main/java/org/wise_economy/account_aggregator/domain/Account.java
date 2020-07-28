@@ -4,6 +4,8 @@ package org.wise_economy.account_aggregator.domain;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -33,4 +35,7 @@ public class Account extends BaseModel{
     private String maskedAccountNumber;
 
     private String linkRefNumber;
+
+    @Enumerated(EnumType.STRING)
+    private ConsentStatus status;
 }

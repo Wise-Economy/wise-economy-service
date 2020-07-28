@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.wise_economy.account_aggregator.domain.ConsentStatus;
 
 @Setter
 @Getter
@@ -20,4 +21,5 @@ public class Account {
     private String accType;
     private String linkRefNumber;
     private String maskedAccNumber;
+    private ConsentStatus status;
 }
